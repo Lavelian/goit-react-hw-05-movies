@@ -12,7 +12,7 @@ const HomePage = () => {
   }, []);
   return (
     <main>
-      <GalleryMovies movies={movies} />{' '}
+      <GalleryMovies movies={movies} trendingMovies={'Trending Movies'} />{' '}
     </main>
   );
 };

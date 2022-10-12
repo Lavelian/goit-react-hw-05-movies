@@ -1,23 +1,28 @@
 import GalleryMoviesItem from './GalleryMoviesItem';
-import { GalleryList } from './GalleryMovies.styled';
+import { GalleryList, TrendingMoviesTitle } from './GalleryMovies.styled';
 
-const GalleryMovies = ({ movies }) => {
+const GalleryMovies = ({ movies, trendingMovies = null }) => {
   return (
-    <GalleryList>
-      {movies.map(({ poster_path, id, title }) => {
-        return (
-          title && (
-            <li key={id}>
-              <GalleryMoviesItem
-                trendingMoviesUrl={poster_path}
-                trendingMoviesID={id}
-                title={title}
-              />
-            </li>
-          )
-        );
-      })}
-    </GalleryList>
+    <>
+      {trendingMovies && (
+        <TrendingMoviesTitle>{trendingMovies}</TrendingMoviesTitle>
+      )}
+      <GalleryList>
+        {movies.map(({ poster_path, id, title }) => {
+          return (
+            title && (
+              <li key={id}>
+                <GalleryMoviesItem
+                  trendingMoviesUrl={poster_path}
+                  trendingMoviesID={id}
+                  title={title}
+                />
+              </li>
+            )
+          );
+        })}
+      </GalleryList>
+    </>
   );
 };
 
