@@ -1,25 +1,28 @@
-import { Formik } from 'formik';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { OnSearchMovie } from 'Api/fetchApi';
+import { Formik } from 'formik';
 import { FormMovies, FieldMovies, SearchButton } from './Movies.styled';
 import GalleryMovies from 'components/GalleryMovies';
+
 const Movies = () => {
-  const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [fetchedMovies, setFetchedMovies] = useState([]);
+  const actualQuery = searchParams.get('query') ?? '';
   const handleSabmit = ({ searchMovies }, { resetForm }) => {
-    setQuery(searchMovies.trim());
-    console.log(query);
+    searchMovies = searchMovies.trim();
+    setSearchParams(searchMovies !== '' ? { query: searchMovies } : {});
     resetForm();
   };
   useEffect(() => {
-    if (query === '') {
+    if (actualQuery === '') {
       return;
     }
-    OnSearchMovie(query).then(({ results }) => {
+    OnSearchMovie(actualQuery).then(({ results }) => {
       setFetchedMovies(results);
     });
-  }, [query]);
+  }, [actualQuery]);
+
   return (
     <main>
       <Formik initialValues={{ searchMovies: '' }} onSubmit={handleSabmit}>

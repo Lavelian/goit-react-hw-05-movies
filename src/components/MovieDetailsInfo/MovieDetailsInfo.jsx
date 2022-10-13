@@ -11,7 +11,7 @@ import Box from 'components/Box';
 const MovieDetailsInfo = ({
   dataMovie: { title, overview, genres = [], poster_path = '', vote_average },
 }) => {
-  const baseUrlPatch = 'https://image.tmdb.org/t/p/w500' + poster_path;
+  const baseUrlPatch = 'https://image.tmdb.org/t/p/w500';
   const getGenresTitle = genres => {
     if (genres.length) {
       return genres
@@ -26,7 +26,7 @@ const MovieDetailsInfo = ({
 
   return (
     <Box display="flex">
-      <ImgFilm src={baseUrlPatch} alt={title} />
+      <ImgFilm src={baseUrlPatch + poster_path} alt={title} />
       <Box ml={2}>
         <TitleFilm>{title}</TitleFilm>
         <AverageFilm>{vote_average}</AverageFilm>

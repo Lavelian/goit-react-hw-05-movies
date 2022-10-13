@@ -27,18 +27,17 @@ export const App = () => {
           </Modal>
         }
       >
-        <Box as="header" mb={2} borderBottom="normal" borderBottomColor="black">
-          <NavBar />
-        </Box>
         <Box width="1200px" px={1} mx="auto">
           <Routes>
-            <Route index element={<Home />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="movies/:movieId" element={<MovieDetails />}>
-              <Route path="cast" element={<Cast />} />
-              <Route path="reviews" element={<Reviews />} />
+            <Route path="/" element={<NavBar />}>
+              <Route index element={<Home />} />
+              <Route path="/movies" element={<Movies />} />
+              <Route path="movies/:movieId" element={<MovieDetails />}>
+                <Route path="cast" element={<Cast />} />
+                <Route path="reviews" element={<Reviews />} />
+              </Route>
+              <Route path="*" element={<>Page not found</>} />
             </Route>
-            <Route path="*" element={<>Page not found</>} />
           </Routes>
         </Box>
       </Suspense>

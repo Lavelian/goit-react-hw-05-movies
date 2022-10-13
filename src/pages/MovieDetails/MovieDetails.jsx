@@ -5,6 +5,7 @@ import MovieDetailsInfo from 'components/MovieDetailsInfo';
 import NavBarInMovies from 'components/NavBarInMovies';
 import { BackLink } from 'components/BackLink/BackLink';
 import Loader from 'components/Loader';
+import Modal from 'components/Modal';
 const MovieDetails = () => {
   const [dataMovie, setDataMovie] = useState([]);
   const { movieId } = useParams();
@@ -25,7 +26,13 @@ const MovieDetails = () => {
 
       <NavBarInMovies />
 
-      <Suspense fallback={<Loader />}>
+      <Suspense
+        fallback={
+          <Modal>
+            <Loader />
+          </Modal>
+        }
+      >
         <Outlet />
       </Suspense>
     </>

@@ -7,21 +7,23 @@ const GalleryMovies = ({ movies, trendingMovies = null }) => {
       {trendingMovies && (
         <TrendingMoviesTitle>{trendingMovies}</TrendingMoviesTitle>
       )}
-      <GalleryList>
-        {movies.map(({ poster_path, id, title }) => {
-          return (
-            title && (
-              <li key={id}>
-                <GalleryMoviesItem
-                  trendingMoviesUrl={poster_path}
-                  trendingMoviesID={id}
-                  title={title}
-                />
-              </li>
-            )
-          );
-        })}
-      </GalleryList>
+      {movies.length > 0 && (
+        <GalleryList>
+          {movies.map(({ poster_path, id, title }) => {
+            return (
+              title && (
+                <li key={id}>
+                  <GalleryMoviesItem
+                    trendingMoviesUrl={poster_path}
+                    trendingMoviesID={id}
+                    title={title}
+                  />
+                </li>
+              )
+            );
+          })}
+        </GalleryList>
+      )}
     </>
   );
 };
