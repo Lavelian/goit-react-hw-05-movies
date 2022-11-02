@@ -6,18 +6,26 @@ import NavBarInMovies from 'components/NavBarInMovies';
 import { BackLink } from 'components/BackLink/BackLink';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
-const MovieDetails = () => {
+const MovieDetails = ({ setIsLoading }) => {
   const [dataMovie, setDataMovie] = useState([]);
   const { movieId } = useParams();
   const location = useLocation();
 
   const backLinkHref = location.state?.from ?? '/movies';
-  console.log(location.state);
+
   useEffect(() => {
-    fetchMovieDetails(movieId).then(({ data }) => {
-      setDataMovie(data);
-    });
-  }, [movieId]);
+    setIsLoading(true);
+    fetchMovieDetails(movieId)
+      .then(({ data }) => {
+        setDataMovie(data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [movieId, setIsLoading]);
 
   return (
     <>

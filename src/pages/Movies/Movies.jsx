@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { FormMovies, FieldMovies, SearchButton } from './Movies.styled';
 import GalleryMovies from 'components/GalleryMovies';
 
-const Movies = () => {
+const Movies = ({ setIsLoading }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [fetchedMovies, setFetchedMovies] = useState([]);
   const actualQuery = searchParams.get('query') ?? '';
@@ -18,10 +18,16 @@ const Movies = () => {
     if (actualQuery === '') {
       return;
     }
-    OnSearchMovie(actualQuery).then(({ results }) => {
-      setFetchedMovies(results);
-    });
-  }, [actualQuery]);
+    setIsLoading(true);
+    OnSearchMovie(actualQuery)
+      .then(({ results }) => {
+        setFetchedMovies(results);
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [actualQuery, setIsLoading]);
 
   return (
     <main>

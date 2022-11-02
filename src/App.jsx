@@ -4,6 +4,7 @@ import NavBar from 'components/MainNavBar';
 import Box from 'components/Box';
 import Modal from 'components/Modal';
 import Loader from 'components/Loader';
+import { useState } from 'react';
 
 // import Loader from 'components/Loader';
 // import Home from 'pages/Home';
@@ -18,6 +19,8 @@ const Cast = lazy(() => import('pages/Cast'));
 const Reviews = lazy(() => import('pages/Reviews'));
 
 export const App = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading);
   return (
     <>
       <Suspense
@@ -30,17 +33,34 @@ export const App = () => {
         <Box width="1200px" px={1} mx="auto">
           <Routes>
             <Route path="/" element={<NavBar />}>
-              <Route index element={<Home />} />
-              <Route path="/movies" element={<Movies />} />
-              <Route path="movies/:movieId" element={<MovieDetails />}>
-                <Route path="cast" element={<Cast />} />
-                <Route path="reviews" element={<Reviews />} />
+              <Route index element={<Home setIsLoading={setIsLoading} />} />
+              <Route
+                path="/movies"
+                element={<Movies setIsLoading={setIsLoading} />}
+              />
+              <Route
+                path="movies/:movieId"
+                element={<MovieDetails setIsLoading={setIsLoading} />}
+              >
+                <Route
+                  path="cast"
+                  element={<Cast setIsLoading={setIsLoading} />}
+                />
+                <Route
+                  path="reviews"
+                  element={<Reviews setIsLoading={setIsLoading} />}
+                />
               </Route>
               <Route path="*" element={<>Page not found</>} />
             </Route>
           </Routes>
         </Box>
       </Suspense>
+      {isLoading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
     </>
   );
 };
